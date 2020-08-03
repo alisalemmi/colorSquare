@@ -1,0 +1,57 @@
+{
+  "name": "colorsquare",
+  "version": "1.0.0",
+  "description": "a simple game that show colored squre then hide it. you should find theme!",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=development webpack-dev-server --mode=development --open",
+    "dev": "NODE_ENV=development webpack --mode=development",
+    "build": "NODE_ENV=production webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alisalemmi/colorSquare.git"
+  },
+  "keywords": [
+    "simple game"
+  ],
+  "author": "ali salemmi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alisalemmi/colorSquare/issues"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "homepage": "https://github.com/alisalemmi/colorSquare#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "autoprefixer": "^9.8.6",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.2.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
+    "resolve-url-loader": "^3.1.1",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
