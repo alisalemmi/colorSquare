@@ -1,55 +1,59 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const autoprefixer = require("autoprefixer");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  mode: "development",
-  entry: "./src/js/index.js",
+  mode: 'development',
+  entry: './src/js/index.js',
   output: {
-    filename: "./js/bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: './js/bundle.js',
+    path: path.resolve(__dirname, 'dist')
   },
   devServer: {
-    contentBase: "./dist",
+    contentBase: './dist'
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "./src/index.html",
+      filename: 'index.html',
+      template: './src/index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: "css/main.css",
-    }),
+      filename: 'css/main.css'
+    })
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader'
       },
       {
         test: /\.s[ac]ss$/i,
         exclude: /node_modules/,
         use: [
-          process.env.NODE_ENV !== "production"
-            ? "style-loader"
+          process.env.NODE_ENV !== 'production'
+            ? 'style-loader'
             : MiniCssExtractPlugin.loader,
-          "css-loader",
+          'css-loader',
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
-              plugins: () => [autoprefixer()],
-            },
+              plugins: () => [autoprefixer()]
+            }
           },
-          "resolve-url-loader",
-          "sass-loader",
-        ],
+          'resolve-url-loader',
+          'sass-loader'
+        ]
       },
-    ],
+      {
+        test: /\.(png|jpe?g|svg)$/i,
+        loader: 'file-loader?name=[folder]/[name].[ext]'
+      }
+    ]
   },
   resolve: {
-    extensions: [".js", ".jsx", ".scss"],
-  },
+    extensions: ['.js', '.jsx', '.scss']
+  }
 };
