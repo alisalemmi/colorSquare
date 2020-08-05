@@ -35,7 +35,12 @@ module.exports = {
         use: [
           process.env.NODE_ENV !== 'production'
             ? 'style-loader'
-            : MiniCssExtractPlugin.loader,
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '../'
+                }
+              },
           'css-loader',
           {
             loader: 'postcss-loader',
@@ -43,12 +48,11 @@ module.exports = {
               plugins: () => [autoprefixer()]
             }
           },
-          'resolve-url-loader',
           'sass-loader'
         ]
       },
       {
-        test: /\.(png|jpe?g|svg)$/i,
+        test: /\.(png|jpe?g|svg|ttf|wav)$/i,
         loader: 'file-loader?name=[folder]/[name].[ext]'
       }
     ]
