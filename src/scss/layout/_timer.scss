@@ -1,0 +1,59 @@
+.timer {
+  position: relative;
+  width: $timer-size;
+  height: $timer-size;
+
+  &__svg {
+    transform: scaleX(-1);
+  }
+
+  &__circle {
+    fill: none;
+    stroke: none;
+  }
+
+  &__path-elapsed {
+    stroke-width: $timer-thick;
+    stroke: $timer-color-back;
+  }
+
+  &__path-remaining {
+    stroke-width: $timer-thick;
+    stroke-linecap: round;
+    fill-rule: nonzero;
+    stroke: currentColor;
+
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: 1s linear all;
+  }
+
+  &__color {
+    &__remain {
+      color: $timer-color-remain;
+    }
+
+    &__warn {
+      color: $timer-color-warn;
+    }
+
+    &__alert {
+      color: $timer-color-alert;
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 0;
+
+    width: $timer-size;
+    height: $timer-size;
+
+    font-size: $font-score / 2;
+    direction: ltr;
+  }
+}

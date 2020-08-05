@@ -1,0 +1,75 @@
+/*
+some colors:
+  #0656BF -> blue
+  #022340 -> dark blue
+  #5CB9F2 -> sky blue
+  #F2AE2E -> orange
+  #F29472 -> pink
+  #1D5902 -> dark green
+  #6FD904 -> light green
+  #3e2723 -> dark brown
+  #4e342e -> brown
+  #044c8a -> beautiful blue
+  #8A4204 -> beautiful brown
+*/
+
+.puzzle {
+  display: grid;
+  grid-template-columns: repeat($puzzle-column, $puzzle-item-width);
+
+  @include respond(tab-port) {
+    grid-template-columns: repeat($puzzle-column, $puzzle-item-width * 0.8);
+  }
+  @media only screen and (max-height: 22.2em) {
+    grid-template-columns: repeat($puzzle-column, $puzzle-item-width * 0.7);
+  }
+  gap: 1rem;
+
+  @include card(center);
+
+  &__item {
+    perspective: 150rem;
+    position: relative;
+    width: 100%;
+    height: 6rem;
+
+    transition: all 0.3s ease-in-out;
+
+    @include no-drag;
+
+    &::after,
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+
+    &::before {
+      transform: rotateY(180deg);
+      background-color: blue;
+    }
+
+    &::after {
+      background-color: green;
+    }
+
+    &--selected {
+      transform: rotateY(180deg);
+
+      &::before {
+        transform: rotateY(0);
+      }
+
+      &::after {
+        transform: rotateY(-180deg);
+      }
+    }
+  }
+}

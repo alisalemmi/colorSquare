@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  mode: 'development',
   entry: './src/js/index.js',
   output: {
     filename: './js/bundle.js',

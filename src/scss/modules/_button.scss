@@ -1,0 +1,97 @@
+.button {
+  position: relative;
+  padding: 0.5rem 1.5rem;
+  width: 10rem;
+
+  cursor: pointer;
+
+  color: #fff;
+  font: 400 1.3rem 'vazir';
+  text-align: center;
+
+  border: none;
+  border-radius: 2px;
+  outline: none;
+
+  overflow: hidden;
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+    transition: all 0.2s ease;
+    right: -50%;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    @media (hover: none) {
+      position: static;
+      margin-left: 1.5rem;
+      transform: none;
+      height: 17px;
+    }
+  }
+
+  &__label {
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    .button__icon {
+      right: 50%;
+    }
+
+    .button__label {
+      transform: translateX(-10rem);
+
+      @media (hover: none) {
+        transform: none;
+      }
+    }
+  }
+
+  @media (hover: none) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 14rem;
+  }
+}
+
+.btn-second {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: $color-total;
+  font-size: 1.3rem;
+  text-decoration: none;
+  cursor: pointer;
+
+  &::after {
+    content: '';
+
+    display: block;
+    height: 1px;
+    width: 110%;
+    margin-top: 0.5rem;
+
+    background-color: currentColor;
+
+    transform: scale(0);
+    transition: all 0.2s ease;
+
+    @media (hover: none) {
+      transform: scale(1);
+    }
+  }
+
+  &:hover {
+    color: darken($color-total, 30%);
+
+    &::after {
+      transform: scale(1);
+    }
+  }
+}
