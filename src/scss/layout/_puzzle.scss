@@ -53,7 +53,7 @@ some colors:
 
     &::before {
       transform: rotateY(180deg);
-      background-color: blue;
+      background-color: brown;
     }
 
     &::after {
@@ -69,6 +69,12 @@ some colors:
 
       &::after {
         transform: rotateY(-180deg);
+      }
+    }
+
+    &--sample {
+      &::before {
+        background-color: blue;
       }
     }
   }
