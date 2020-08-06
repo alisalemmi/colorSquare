@@ -6,7 +6,9 @@ const state = {
     correct: 0,
     wrong: 0
   },
-  finish: true
+  finish: true,
+  width: 2,
+  height: 2
 };
 
 export const getFinish = () => state.finish;
@@ -21,45 +23,43 @@ export const reset = () => {
   state.score.correct = 0;
   state.score.wrong = 0;
   state.finish = false;
+  state.width = 2;
+  state.height = 2;
 };
 
 /**
- * select 3 different item randomly and return them
+ * select 2nlogn different item randomly and return them
  */
-export const selectSample = () => {
-  // first item
-  state.samples.push(Math.floor(Math.random() * 4 + 5));
+export const selectSample = (n, m) => {
+  const NO = 2 * n * Math.log10(n);
+  let x;
+  let y;
+  for (let i = 0; i < NO; i++) {
+    do {
+      x = Math.floor(Math.random() * n);
+      y = Math.floor(Math.random() * m);
+    } while (state.samples.includes({ x: x, y: y }));
+    state.samples.push({ x: x, y: y });
+  }
 
-  // second item
-  let r;
-  do r = Math.floor(Math.random() * 4 + 5);
-  while (state.samples.includes(r));
-  state.samples.push(r);
-
-  // third item
-  state.samples.splice(
-    (Math.random() * 10) % 3,
-    0,
-    Math.floor(Math.random() * 4 + 1)
-  );
+  state.total = NO;
 
   return state.samples;
 };
 
 /**
  * select item randomly for filling in puzzle
- * @param {Number} n number of item in puzzle
+ * @param {Number} n number of columns in puzzle
+ * @param {Number} m number of rows in puzzle
  */
-export const selectItem = (n = 36) => {
-  for (let i = 0; i < n; i++) {
-    const r = Math.floor(Math.random() * 8 + 1);
-    state.items.push({ type: r, select: false });
-
-    if (state.samples.includes(r)) state.total++;
+export const selectItem = (n = 2, m = 2) => {
+  for (let j = 0; j < m; j++) {
+    for (let i = 0; i < n; i++) {
+      state.items.push({ x: i, y: j, select: false });
+    }
   }
 
-  if (state.total !== 0) return state.items;
-  return selectItem();
+  return state.items;
 };
 
 /**
@@ -68,13 +68,14 @@ export const selectItem = (n = 36) => {
  * second item in array is either number of correct or wrong.
  * @param {Number} index index of item
  */
-export const select = index => {
+export const select = (i, j) => {
+  const index = j * width + i;
   if (state.finish || state.items[index].select) return;
 
   state.items[index].select = true;
 
   let isCorrect = false;
-  if (state.samples.includes(state.items[index].type)) {
+  if (state.samples.includes({ x: i, y: j })) {
     isCorrect = true;
     state.score.correct++;
   } else state.score.wrong++;
@@ -119,4 +120,4 @@ export const calcScore = remainTime => {
 };
 
 export const getSolution = () =>
-  state.items.map(val => state.samples.includes(val.type));
+  state.items.map(val => state.samples.includes({ x: val.x, y: val.y }));

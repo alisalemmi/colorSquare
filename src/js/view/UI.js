@@ -16,31 +16,27 @@ export const reset = () => {
   DOM.wrong.innerHTML = '0';
   DOM.total.innerHTML = '0';
 };
-
-/**
- * add selected samples to page
- * @param {Number[]} samples
- */
-export const addSample = samples => {
-  DOM.samples.innerHTML = '';
-  for (const i of samples)
-    DOM.samples.innerHTML += `<div><img src="./img/${i}.png" alt="Sample${i}" class="sample__item"/></div>`;
-};
+/*
+<div class="puzzle__item"></div>
+<div class="puzzle__item puzzle__item--sample"></div>
+*/
 
 /**
  * add selected items to puzzle
- * @param {Number[]} items
+ * @param {Object[]} items
+ * @param {Object[]} samples
  */
-export const addItem = items => {
+export const addItem = (items, samples) => {
   DOM.puzzle.innerHTML = '';
 
-  let i = 0;
-  for (const item of items)
-    DOM.puzzle.innerHTML += `<div><img src="./img/${
-      item.type
-    }.png" alt="Sample${
-      item.type
-    }" class="puzzle__item" data-num=${i++}/></div>`;
+  for (const item of items) {
+    if (samples.include({ x: item.x, y: item.y })) {
+      DOM.puzzle.innerHTML +=
+        '<div class="puzzle__item puzzle__item--sample"></div>';
+    } else {
+      DOM.puzzle.innerHTML += '<div class="puzzle__item"></div>';
+    }
+  }
 };
 
 /**
@@ -83,6 +79,7 @@ export const update = (target, result) => {
 export const setSolution = solution => {
   DOM.items.forEach((item, i) => {
     item.classList.add(solution[i] ? 'item--correct' : 'item--wrong');
+    if (solution[i]) item.classList.add('puzzle__item--sample');
   });
 };
 

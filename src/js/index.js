@@ -15,83 +15,83 @@ import '../img/sprite.svg';
 import '../audio/correct.wav';
 import '../audio/wrong.wav';
 
-// import * as UI from './view/UI';
-// import * as Item from './model/items';
-// import * as TimerUI from './view/timer';
-// import * as Timer from './model/timer';
-// import * as Popup from './view/popup';
+import * as UI from './view/UI';
+import * as Item from './model/items';
+import * as TimerUI from './view/timer';
+import * as Timer from './model/timer';
+import * as Popup from './view/popup';
 
-// const TIME = 30;
+const TIME = 30;
 
-// //-----------------------------
-// //            fill
-// //-----------------------------
-// const reset = () => {
-//   Item.reset();
-//   UI.reset();
-// };
+//-----------------------------
+//            fill
+//-----------------------------
+const reset = () => {
+  Item.reset();
+  UI.reset();
+};
 
-// const fillPage = () => {
-//   UI.addSample(Item.selectSample());
-//   UI.addItem(Item.selectItem());
+const fillPage = () => {
+  UI.addSample(Item.selectSample());
+  UI.addItem(Item.selectItem());
 
-//   UI.setItemsClick(clickHandler);
-// };
+  UI.setItemsClick(clickHandler);
+};
 
-// const finish = isTimeUp => {
-//   const time = Timer.getTime();
-//   Item.setFinish(true);
-//   Popup.showScore(isTimeUp, Item.calcScore(time), {
-//     time,
-//     total: TIME
-//   });
-//   UI.setSolution(Item.getSolution());
-// };
+const finish = isTimeUp => {
+  const time = Timer.getTime();
+  Item.setFinish(true);
+  Popup.showScore(isTimeUp, Item.calcScore(time), {
+    time,
+    total: TIME
+  });
+  UI.setSolution(Item.getSolution());
+};
 
-// //-----------------------------
-// //            click
-// //-----------------------------
-// const clickHandler = e => {
-//   const index = parseInt(e.target.getAttribute('data-num'));
+//-----------------------------
+//            click
+//-----------------------------
+const clickHandler = e => {
+  const index = parseInt(e.target.getAttribute('data-num'));
 
-//   const result = Item.select(index);
+  const result = Item.select(index);
 
-//   if (result) {
-//     UI.update(e.target, result);
+  if (result) {
+    UI.update(e.target, result);
 
-//     if (result.isAllFind) {
-//       finish(false);
-//       Timer.stop();
-//     }
-//   }
-// };
+    if (result.isAllFind) {
+      finish(false);
+      Timer.stop();
+    }
+  }
+};
 
-// Popup.playButtonHandler(() => {
-//   Popup.showRestart(() => Timer.start(TIME));
+Popup.playButtonHandler(() => {
+  Popup.showRestart(() => Timer.start(TIME));
 
-//   reset();
-//   fillPage();
-// });
+  reset();
+  fillPage();
+});
 
-// //-----------------------------
-// //            timer
-// //-----------------------------
-// document.addEventListener('tick', e => {
-//   TimerUI.update(e.detail.remain, e.detail.total);
-// });
+//-----------------------------
+//            timer
+//-----------------------------
+document.addEventListener('tick', e => {
+  TimerUI.update(e.detail.remain, e.detail.total);
+});
 
-// document.addEventListener('timeUp', () => finish(true));
+document.addEventListener('timeUp', () => finish(true));
 
-// //-----------------------------
-// //            other
-// //-----------------------------
-// setTimeout(() => {
-//   document.querySelector('#check__menu').checked = true;
-// }, 7000);
+//-----------------------------
+//            other
+//-----------------------------
+setTimeout(() => {
+  document.querySelector('#check__menu').checked = true;
+}, 7000);
 
-// Popup.helpHandler(Item.getFinish);
+Popup.helpHandler(Item.getFinish);
 
-// /**
-//  * rank
-//  * help
-//  */
+/**
+ * rank
+ * help
+ */
