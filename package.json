@@ -4,9 +4,12 @@
   "description": "a simple game that show colored squre then hide it. you should find theme!",
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=development&& webpack-dev-server --mode=development --open",
-    "dev": "SET NODE_ENV=development&& webpack --mode=development",
-    "build": "SET NODE_ENV=production&& webpack --mode=production"
+    "start": "NODE_ENV=development webpack-dev-server --mode=development --open",
+    "dev": "NODE_ENV=development webpack --mode=development",
+    "build": "NODE_ENV=production webpack --mode=production",
+    "start:win": "SET NODE_ENV=development&& webpack-dev-server --mode=development --open",
+    "dev:win": "SET NODE_ENV=development&& webpack --mode=development",
+    "build:win": "SET NODE_ENV=production&& webpack --mode=production"
   },
   "repository": {
     "type": "git",
