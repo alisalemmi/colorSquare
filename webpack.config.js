@@ -47,7 +47,14 @@ module.exports = {
               plugins: () => [autoprefixer()]
             }
           },
-          'sass-loader'
+          'sass-loader',
+          {
+            loader: '@epegzz/sass-vars-loader',
+            options: {
+              syntax: 'scss',
+              files: [path.resolve(__dirname, './src/config.json')]
+            }
+          }
         ]
       },
       {
