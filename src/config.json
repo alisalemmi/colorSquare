@@ -1,3 +1,5 @@
 {
-  "showSolutionDuration": 1000
+  "showSolutionDuration": 1500,
+  "puzzleItemRotateTime": 500,
+  "puzzleNewItemTime": 300
 }
