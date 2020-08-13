@@ -1,54 +1,49 @@
+import * as config from '../../config.json';
+
 const DOM = {
   puzzle: document.querySelector('.puzzle'),
-  time: document.querySelector('.timer-number'),
-  samples: document.querySelector('.sample'),
-  items: null,
   correct: document.querySelector('.scoreboard__correct__number'),
   wrong: document.querySelector('.scoreboard__wrong__number'),
   total: document.querySelector('.scoreboard__total__number'),
-  mute: document.querySelector('.mute')
+  items: []
 };
 
 let mute = false;
 
-export const reset = () => {
-  DOM.correct.innerHTML = '0';
-  DOM.wrong.innerHTML = '0';
-  DOM.total.innerHTML = '0';
-};
-/*
-<div class="puzzle__item"></div>
-<div class="puzzle__item puzzle__item--sample"></div>
-*/
-
 /**
- * add selected items to puzzle
- * @param {Object[]} items
- * @param {Object[]} samples
+ * add items to the puzzle
+ * @param {Number[]} items
  */
-export const addItem = (items, samples) => {
-  DOM.puzzle.innerHTML = '';
+export const addItem = items => {
+  // calc width and height of the puzzle
+  const tmp = Math.sqrt(items.length);
+  const width = Math.ceil(tmp);
+  const height = Math.floor(tmp);
 
+  // update grid
+  DOM.puzzle.innerHTML = '';
+  DOM.puzzle.style.gridTemplateColumns = `repeat(${width}, min-content)`;
+
+  // add items
+  let i = 0;
   for (const item of items) {
-    if (samples.include({ x: item.x, y: item.y })) {
-      DOM.puzzle.innerHTML +=
-        '<div class="puzzle__item puzzle__item--sample"></div>';
-    } else {
-      DOM.puzzle.innerHTML += '<div class="puzzle__item"></div>';
-    }
+    const classList = `puzzle__item${item.type ? ' puzzle__item--sample' : ''}`;
+
+    if (width == height && items.length - i <= height)
+      classList += ' puzzle__item--new-y';
+    else if (width == height + 1 && i % width == 0)
+      classList += ' puzzle__item--new-x';
+
+    DOM.puzzle.innerHTML += `<div class="${classList}" data-num=${i++}></div>`;
   }
 };
 
-/**
- * add event listener to items
- * @param {EventListenerOrEventListenerObject} func
- */
 export const setItemsClick = func => {
   DOM.items = document.querySelectorAll('.puzzle__item');
 
-  DOM.items.forEach(item => {
+  for (const item of DOM.items) {
     item.addEventListener('click', func);
-  });
+  }
 };
 
 /**
@@ -56,15 +51,18 @@ export const setItemsClick = func => {
  * 2- update score
  * 3- play audio
  * @param {Element} target
- * @param {[Boolean, Number, Number]} result
+ * @param {{isCorrect, correct, wrong, score, newItem}} result
  */
 export const update = (target, result) => {
-  target.style.opacity = 0.5;
+  // select item
+  target.classList.add('puzzle__item--select');
 
+  // update scoreboard
   DOM.correct.innerHTML = result.correct;
   DOM.wrong.innerHTML = result.wrong;
   DOM.total.innerHTML = result.score;
 
+  // play music
   if (!mute) {
     new Audio(
       result.isCorrect ? './audio/correct.wav' : './audio/wrong.wav'
@@ -72,25 +70,36 @@ export const update = (target, result) => {
   }
 };
 
-/**
- *
- * @param {Number[]} solution
- */
-export const setSolution = solution => {
-  DOM.items.forEach((item, i) => {
-    item.classList.add(solution[i] ? 'item--correct' : 'item--wrong');
-    if (solution[i]) item.classList.add('puzzle__item--sample');
-  });
+const hideSolution = () => {
+  for (const item of DOM.items) item.classList.remove('puzzle__item--select');
 };
 
-DOM.mute.addEventListener('click', () => {
-  if (mute) {
-    DOM.mute.innerHTML =
-      '<svg class="icon"><use xlink:href="./img/sprite.svg#speaker"/></svg>';
-    mute = false;
-  } else {
-    DOM.mute.innerHTML =
-      '<svg class="icon"><use xlink:href="./img/sprite.svg#speaker-1"/></svg>';
-    mute = true;
-  }
-});
+const showSolution = () => {
+  for (const item of DOM.items) item.classList.add('puzzle__item--select');
+};
+
+const sleep = time => new Promise(r => setTimeout(r, time));
+
+export const goNext = async (newItems, clickHandler) => {
+  // wait to selected item rotate
+  await sleep(config.puzzleItemRotateTime);
+
+  hideSolution();
+
+  // wait until item rotation finished
+  await sleep(config.puzzleItemRotateTime * 2);
+
+  // add new item
+  addItem(newItems);
+  setItemsClick(clickHandler);
+
+  // wait untill adding animation finished
+  await sleep(config.puzzleItemRotateTime * 2);
+
+  // show solution
+  showSolution();
+
+  await sleep(config.showSolutionDuration);
+
+  hideSolution();
+};

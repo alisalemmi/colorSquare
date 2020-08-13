@@ -1,39 +1,33 @@
-/*
-some colors:
-  #0656BF -> blue
-  #022340 -> dark blue
-  #5CB9F2 -> sky blue
-  #F2AE2E -> orange
-  #F29472 -> pink
-  #1D5902 -> dark green
-  #6FD904 -> light green
-  #3e2723 -> dark brown
-  #4e342e -> brown
-  #044c8a -> beautiful blue
-  #8A4204 -> beautiful brown
-*/
-
 .puzzle {
   display: grid;
-  grid-template-columns: repeat($puzzle-column, $puzzle-item-width);
-
-  @include respond(tab-port) {
-    grid-template-columns: repeat($puzzle-column, $puzzle-item-width * 0.8);
-  }
-  @media only screen and (max-height: 22.2em) {
-    grid-template-columns: repeat($puzzle-column, $puzzle-item-width * 0.7);
-  }
   gap: 1rem;
 
   @include card(center);
 
   &__item {
-    perspective: 150rem;
     position: relative;
-    width: 100%;
-    height: 6rem;
+    justify-self: left;
+    perspective: 150rem;
 
-    transition: all 0.3s ease-in-out;
+    width: $puzzle-item-width;
+    height: $puzzle-item-width;
+
+    @include respond(tab-port) {
+      width: $puzzle-item-width * 0.8;
+      height: $puzzle-item-width * 0.8;
+    }
+    @media only screen and (max-height: 22.2em) {
+      width: $puzzle-item-width * 0.7;
+      height: $puzzle-item-width * 0.7;
+    }
+
+    &--new-x {
+      animation: anim-new-x #{$puzzleNewItemTime}ms ease-in-out;
+    }
+
+    &--new-y {
+      animation: anim-new-y #{$puzzleNewItemTime}ms ease-in-out;
+    }
 
     @include no-drag;
 
@@ -46,21 +40,23 @@ some colors:
       left: 0;
       width: 100%;
       height: 100%;
+
       backface-visibility: hidden;
+      transition: all #{$puzzleItemRotateTime}ms ease-in-out;
       overflow: hidden;
       border-radius: 1rem;
     }
 
     &::before {
       transform: rotateY(180deg);
-      background-color: brown;
+      background-color: $color-wrong;
     }
 
     &::after {
-      background-color: green;
+      background-color: $color-total;
     }
 
-    &--selected {
+    &--select {
       transform: rotateY(180deg);
 
       &::before {
@@ -74,8 +70,20 @@ some colors:
 
     &--sample {
       &::before {
-        background-color: blue;
+        background-color: $color-correct;
       }
     }
+  }
+}
+
+@keyframes anim-new-x {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes anim-new-y {
+  from {
+    height: 0;
   }
 }
