@@ -1,0 +1,65 @@
+.result {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(4rem, 5rem));
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  row-gap: 2.5rem;
+
+  margin: 4rem 0;
+  height: 100%;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 2;
+  }
+
+  &__score > .timer {
+    transform: scale(1.25) translateY(-10%);
+  }
+
+  &__game-score {
+    font-size: 115%;
+  }
+
+  &__correct,
+  &__wrong {
+    text-align: center;
+
+    @include respond(phone) {
+      width: 7rem;
+    }
+
+    &__number {
+      display: block;
+      margin-bottom: -$font-score / 4;
+
+      @include respond(phone) {
+        margin: 0;
+      }
+
+      font-size: $font-score;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: $font-score / 2;
+    }
+  }
+
+  &__correct {
+    grid-column: 2 / 4;
+
+    &__number {
+      color: $color-correct;
+    }
+  }
+
+  &__wrong__number {
+    color: $color-wrong;
+  }
+}

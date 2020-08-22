@@ -1,0 +1,35 @@
+.table {
+  font-size: 1.3rem;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+
+  li {
+    display: flex;
+    padding: 0.5rem 0;
+    background-color: #fafafa;
+
+    &:nth-child(even) {
+      background-color: #eee;
+    }
+  }
+
+  &__header {
+    color: #fff;
+    background-color: $color-correct !important;
+    font-weight: 700;
+  }
+
+  &__rank,
+  &__score {
+    flex: 0 0 4rem;
+    text-align: center;
+  }
+
+  &__name {
+    margin: {
+      right: 1rem;
+      left: auto;
+    }
+  }
+}

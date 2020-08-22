@@ -4,12 +4,15 @@
 
 @import 'modules/cards';
 @import 'modules/button';
+@import 'modules/popup';
+@import 'modules/timer';
+@import 'modules/table';
 
 @import 'layout/base';
 
-@import 'layout/logo';
+@import 'layout/intro';
 @import 'layout/puzzle';
 @import 'layout/sample';
 @import 'layout/scoreboard';
-@import 'layout/timer';
-@import 'layout/popup';
+@import 'layout/popupresult';
+@import 'layout/restartTimer';

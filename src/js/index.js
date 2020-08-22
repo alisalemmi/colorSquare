@@ -1,15 +1,4 @@
-import '../scss/main';
-
-import '../img/1.png';
-import '../img/2.png';
-import '../img/3.png';
-import '../img/4.png';
-import '../img/5.png';
-import '../img/6.png';
-import '../img/7.png';
-import '../img/8.png';
-import '../img/logo2.png';
-import '../img/sprite.svg';
+import '../scss/main.scss';
 
 import '../audio/correct.wav';
 import '../audio/wrong.wav';
@@ -25,14 +14,6 @@ import * as Popup from './view/popup';
 //-----------------------------
 //            click
 //-----------------------------
-const goNext = async () => {
-  Item.setFinish(true);
-  Item.goNext();
-  await UI.goNext(Item.selectItems(), clickHandler);
-
-  UI.setItemsClick(clickHandler);
-  Item.setFinish(false);
-};
 
 const clickHandler = async e => {
   const index = parseInt(e.target.getAttribute('data-num'));
@@ -48,4 +29,35 @@ const clickHandler = async e => {
   }
 };
 
-goNext();
+const goNext = async () => {
+  Item.setFinish(true);
+  Item.goNext();
+  await UI.goNext(Item.selectItems(), clickHandler);
+
+  UI.setItemsClick(clickHandler);
+  Item.setFinish(false);
+};
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelector('#check__menu').checked = true;
+  }, config.introDuration + config.introDelay);
+});
+
+Popup.playButtonHandler(async () => {
+  // show 3 2 1
+  Popup.showRestart(() => Timer.start(config.time));
+
+  // reset
+  // UI.reset();
+  // Item.reset();
+
+  // add items
+  // UI.addSamples(Item.selectSample());
+  // UI.addItem(Item.selectItems());
+
+  goNext();
+
+  // handle click
+  // UI.setItemsClick(clickHandler);
+});

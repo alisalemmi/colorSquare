@@ -3,12 +3,24 @@
     "browser": true,
     "es2020": true
   },
-  "extends": ["airbnb-base"],
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
   "parserOptions": {
     "ecmaVersion": 11,
     "sourceType": "module"
   },
   "rules": {
-    "comma-dangle": "off"
+    "prettier/prettier": "warn",
+    "radix": "off",
+    "comma-dangle": "off",
+    "linebreak-style": "off",
+    "arrow-parens": "off",
+    "no-param-reassign": "off",
+    "no-restricted-syntax": "off",
+    "import/prefer-default-export": "off",
+    "implicit-arrow-linebreak": "off",
+    "func-names": "off",
+    "no-plusplus": "off",
+    "consistent-return": "off"
   }
 }

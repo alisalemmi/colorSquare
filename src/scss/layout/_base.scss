@@ -3,6 +3,7 @@
 }
 
 html {
+  height: 100%;
   font-size: 62.5%;
 
   @include respond(tab-land) {
@@ -25,7 +26,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: url('../img/background.JPG') bottom left/cover;
+  height: 100%;
+  background: url('../img/background-min.jpg') bottom left/cover;
 
   font-family: 'vazir';
   direction: rtl;
@@ -35,10 +37,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 100vh;
+  height: 100%;
   transition: all 1s ease;
 
-  // opacity: 0;
+  opacity: 0;
 
   @include respond(phone) {
     flex-direction: column;

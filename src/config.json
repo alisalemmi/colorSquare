@@ -1,5 +1,17 @@
 {
+  "minRankScore": 1000,
+  "time": 60,
+  "introDuration": 60,
+  "introDelay": 10,
+  "popupCloseDuration": 500,
   "showSolutionDuration": 1500,
   "puzzleItemRotateTime": 500,
-  "puzzleNewItemTime": 300
+  "puzzleNewItemTime": 300,
+
+  "name": "name",
+  "username": "username",
+  "myRank": 0,
+  "maxScore": 0,
+  "rankScore": 0,
+  "tops": []
 }

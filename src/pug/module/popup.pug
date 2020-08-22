@@ -1,0 +1,55 @@
+block var
+
+input.check--front(type='checkbox', id=`check__${front_id}`)
+.popup__backdrop
+  .popup
+    //- front
+    .popup--front(id=popup_front_id_enable ? `popup__${front_id}` : "")
+      //- top
+      .popup__top
+        block front-logo
+        h2.popup__title= front_title
+        label.popup__close(for=`check__${front_id}`)
+
+      //- body
+      block front-body
+
+      //- bottom
+      .popup__bottom
+        //- button primary
+        label.button.button--primary.button__play(for=`check__${front_id}`)
+          svg.button__icon
+            use(xlink:href=`../img/sprite.svg#${front_btnPrimary_icon}`)
+          .button__label= front_btnPrimary_label
+
+        //- button secondary
+        label.button.button--secondary(for=`check__${back_id}`)
+          svg.button__icon
+            use(xlink:href=`../img/sprite.svg#${front_btnSecondary_icon}`)
+          .button__label= front_btnSecondary_label
+
+    //- back
+    input.check--back(type='checkbox', id=`check__${back_id}`)
+    .popup--back(id=popup_back_id_enable ? `popup__${back_id}` : "")
+      //- top
+      .popup__top
+        block back-logo
+        h2.popup__title= back_title
+        label.popup__close(for=`check__${back_id}`)
+
+      //- body
+      block back-body
+
+      //- bottom
+      .popup__bottom
+        //- button primary
+        label.button.button--primary.button__play(for=`check__${back_id}`)
+          svg.button__icon
+            use(xlink:href=`../img/sprite.svg#${back_btnPrimary_icon}`)
+          .button__label= back_btnPrimary_label
+
+        //- button secondary
+        label.button.button--secondary(for=`check__${back_id}`)
+          svg.button__icon
+            use(xlink:href=`../img/sprite.svg#${back_btnSecondary_icon}`)
+          .button__label= back_btnSecondary_label

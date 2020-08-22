@@ -1,0 +1,25 @@
+ul.table
+//- 
+  //- header 
+  li.table__header
+    span.table__rank رتبه
+    span.table__name نام
+    span.table__score امتیاز
+
+  //- rows
+  li
+    span.table__rank ${t.rank}
+    span.table__name ${t.name}
+    span.table__score ${t.score}
+
+  //- ...
+  li
+    span.table__rank &vellip;
+    span.table__name(style={ "margin-right": "4rem" }) &vellip;
+    span.table__score &vellip;
+
+  //- last row after ...
+  li
+    span.table__rank ${config.myRank}
+    span.table__name ${config.name}
+    span.table__score ${config.maxScore}

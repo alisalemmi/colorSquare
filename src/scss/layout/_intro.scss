@@ -1,6 +1,5 @@
-.popup-logo {
-  // display: flex;
-  display: none;
+.intro {
+  display: flex;
   justify-content: center;
   align-items: center;
 
@@ -13,20 +12,20 @@
   backdrop-filter: blur(5px) brightness(40%);
   transition: all ease 0.2s;
 
-  // animation: anim-backdrop 8s ease both;
-}
+  animation: anim__intro__backdrop #{$introDuration + $introDelay}ms ease both;
 
-.logo {
-  display: block;
-  width: 60vw;
-  // animation: anim-logo 6s 1s ease both;
+  &__logo {
+    display: block;
+    width: 60vw;
+    animation: anim__intro__logo #{$introDuration}ms #{$introDelay}ms ease both;
 
-  @include respond(tab-port) {
-    width: 90vw;
+    @include respond(tab-port) {
+      width: 90vw;
+    }
   }
 }
 
-@keyframes anim-logo {
+@keyframes anim__intro__logo {
   from {
     opacity: 0;
   }
@@ -40,7 +39,7 @@
   }
 }
 
-@keyframes anim-backdrop {
+@keyframes anim__intro__backdrop {
   from {
     opacity: 0;
   }

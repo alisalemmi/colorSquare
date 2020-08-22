@@ -5,6 +5,9 @@ $card-padding: 1rem;
 
 $puzzle-item-width: 6rem;
 
+$popup-padding-tb: 1.3rem;
+$popup-padding-rl: 3rem;
+$popup-margin-t: -2rem;
 $popup-border-radius: 0rem;
 $popup-icon-size: 8rem;
 
@@ -31,8 +34,3 @@ $timer-color-back: #edf1f3;
 $timer-color-remain: #4caf50;
 $timer-color-warn: #ffb300;
 $timer-color-alert: #e91e63;
-
-//-----------------------------
-//            time
-//-----------------------------
-$popup-anim-duration: 0.3s;

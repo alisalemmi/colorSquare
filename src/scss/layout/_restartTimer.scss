@@ -1,0 +1,15 @@
+.restart-timer {
+  &--show {
+    visibility: visible !important;
+    backdrop-filter: blur(2px) brightness(60%);
+    animation: anim__intro__backdrop 4.5s ease both;
+  }
+
+  &__number {
+    font-size: 9rem;
+    font-weight: 100;
+    color: #fff;
+
+    @include no-drag();
+  }
+}

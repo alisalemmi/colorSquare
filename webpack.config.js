@@ -15,7 +15,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './src/index.html'
+      template: './src/pug/index.pug'
     }),
     new MiniCssExtractPlugin({
       filename: 'css/main.css'
@@ -27,6 +27,11 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.pug$/,
+        exclude: /node_modules/,
+        loader: ['html-loader', 'pug-html-loader']
       },
       {
         test: /\.s[ac]ss$/i,

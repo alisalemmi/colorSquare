@@ -1,0 +1,35 @@
+extends layout/layout
+include module/timer
+
+block container
+  .container
+    .scoreboard
+      +timer
+
+      .scoreboard__correct
+        span.scoreboard__correct__number 0
+        h3 درست
+
+      .scoreboard__wrong
+        span.scoreboard__wrong__number 0
+        h3 نا درست
+
+      .scoreboard__total
+        span.scoreboard__total__number 0
+        h3 امتیاز
+
+    .puzzle
+      //- .puzzle__item__box
+        //- img.puzzle__item(src = './img/1.png', alt = 'Sample1', data-num = ${i++})
+
+
+    .sample
+      //- div: img.sample__item(src = '../img/1.png', alt = 'Sample${i}')
+
+      .help
+        svg.icon
+          use(xlink:href='../img/sprite.svg#home')/
+
+      .mute
+        svg.icon
+          use(xlink:href='../img/sprite.svg#speaker')/
