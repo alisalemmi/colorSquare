@@ -48,15 +48,16 @@ Popup.playButtonHandler(async () => {
   // show 3 2 1
   Popup.showRestart(() => Timer.start(config.time));
 
+  Item.setFinish(false);
+
   // reset
-  // UI.reset();
-  // Item.reset();
+  UI.reset(Item.reset(), clickHandler);
 
   // add items
   // UI.addSamples(Item.selectSample());
   // UI.addItem(Item.selectItems());
 
-  goNext();
+  // goNext();
 
   // handle click
   // UI.setItemsClick(clickHandler);

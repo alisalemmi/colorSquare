@@ -20,9 +20,11 @@ export const reset = () => {
   state.height = 2;
   state.score.correct = 0;
   state.score.wrong = 0;
-  state.items = [];
   state.total = 0;
+  state.items = selectItems().items;
   state.finish = false;
+
+  return state.items;
 };
 
 /**
@@ -51,9 +53,15 @@ export const selectItems = () => {
 
   // make array and shuffle it
   for (let i = 0; i < state.height * state.width; i++)
-    state.items.push({ select: false, type: i < n ? true : false });
+    state.items.push({ select: false, type: i < n });
 
-  return shuffle(state.items);
+  shuffle(state.items);
+
+  return {
+    width: state.width,
+    height: state.height,
+    items: state.items
+  };
 };
 
 /**
@@ -72,6 +80,7 @@ export const select = index => {
   if (isCorrect) state.score.correct++;
   else state.score.wrong++;
 
+  console.log(state.total);
   return {
     isCorrect,
     correct: state.score.correct,

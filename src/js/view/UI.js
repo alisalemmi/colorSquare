@@ -1,4 +1,4 @@
-import * as config from '../../config.json';
+import config from '../../config.json';
 
 const DOM = {
   puzzle: document.querySelector('.puzzle'),
@@ -10,28 +10,26 @@ const DOM = {
 
 let mute = false;
 
+const sleep = time => new Promise(r => setTimeout(r, time));
+
 /**
  * add items to the puzzle
  * @param {Number[]} items
  */
 export const addItem = items => {
-  // calc width and height of the puzzle
-  const tmp = Math.sqrt(items.length);
-  const width = Math.ceil(tmp);
-  const height = Math.floor(tmp);
-
+  console.log('add', items);
   // update grid
   DOM.puzzle.innerHTML = '';
-  DOM.puzzle.style.gridTemplateColumns = `repeat(${width}, min-content)`;
+  DOM.puzzle.style.gridTemplateColumns = `repeat(${items.width}, min-content)`;
 
   // add items
   let i = 0;
-  for (const item of items) {
-    const classList = `puzzle__item${item.type ? ' puzzle__item--sample' : ''}`;
+  for (const item of items.items) {
+    let classList = `puzzle__item${item.type ? ' puzzle__item--sample' : ''}`;
 
-    if (width == height && items.length - i <= height)
+    if (items.width === items.height && items.items.length - i <= items.height)
       classList += ' puzzle__item--new-y';
-    else if (width == height + 1 && i % width == 0)
+    else if (items.width === items.height + 1 && i % items.width === 0)
       classList += ' puzzle__item--new-x';
 
     DOM.puzzle.innerHTML += `<div class="${classList}" data-num=${i++}></div>`;
@@ -44,6 +42,46 @@ export const setItemsClick = func => {
   for (const item of DOM.items) {
     item.addEventListener('click', func);
   }
+};
+
+export const reset = async (initialItems, clickHandler) => {
+  console.log(initialItems);
+  DOM.correct.innerHTML = 0;
+  DOM.wrong.innerHTML = 0;
+  DOM.total.innerHTML = 0;
+
+  await sleep(4200);
+  addItem({
+    items: [initialItems[0]],
+    width: 1,
+    height: 1
+  });
+
+  await sleep(config.puzzleNewItemTime * 2);
+  addItem({
+    items: [initialItems[0], initialItems[1]],
+    width: 2,
+    height: 1
+  });
+
+  await sleep(config.puzzleNewItemTime * 2);
+  addItem({
+    items: [initialItems[0], initialItems[1], initialItems[2], initialItems[3]],
+    width: 2,
+    height: 2
+  });
+
+  setItemsClick(clickHandler);
+
+  // wait untill adding animation finished
+  await sleep(config.puzzleItemRotateTime * 2);
+
+  // show solution
+  showSolution();
+
+  await sleep(config.showSolutionDuration);
+
+  hideSolution();
 };
 
 /**
@@ -77,8 +115,6 @@ const hideSolution = () => {
 const showSolution = () => {
   for (const item of DOM.items) item.classList.add('puzzle__item--select');
 };
-
-const sleep = time => new Promise(r => setTimeout(r, time));
 
 export const goNext = async (newItems, clickHandler) => {
   // wait to selected item rotate
