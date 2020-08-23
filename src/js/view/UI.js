@@ -1,3 +1,4 @@
+import Z from 'random-z';
 import config from '../../config.json';
 
 const DOM = {
@@ -10,78 +11,81 @@ const DOM = {
 
 let mute = false;
 
+let variance = 0.001;
+let mean;
+
 const sleep = time => new Promise(r => setTimeout(r, time));
+
+const getItemClass = (pos, width, height, length, isExpanded) => {
+  if (!isExpanded) return 'puzzle__item';
+
+  if (width === height && length - pos <= height)
+    return 'puzzle__item puzzle__item--new-y';
+
+  if (width === height + 1 && pos % width === 0)
+    return 'puzzle__item puzzle__item--new-x';
+
+  return 'puzzle__item';
+};
+
+const getItemColor = type => {
+  return type
+    ? config.puzzleColors[
+        Math.floor(Math.abs(Z() * variance + mean)) % config.puzzleColors.length
+      ]
+    : config.frontColor;
+};
 
 /**
  * add items to the puzzle
- * @param {Number[]} items
+ * @param {Number[]} puzzle
  */
-export const addItem = items => {
-  console.log('add', items);
+export const addItem = puzzle => {
   // update grid
-  DOM.puzzle.innerHTML = '';
-  DOM.puzzle.style.gridTemplateColumns = `repeat(${items.width}, min-content)`;
+  DOM.puzzle.style.gridTemplateColumns = `repeat(${puzzle.width}, min-content)`;
 
-  // add items
-  let i = 0;
-  for (const item of items.items) {
-    let classList = `puzzle__item${item.type ? ' puzzle__item--sample' : ''}`;
+  // update probablity variable
+  mean = Math.random() * config.puzzleColors.length;
+  variance *= 2;
 
-    if (items.width === items.height && items.items.length - i <= items.height)
-      classList += ' puzzle__item--new-y';
-    else if (items.width === items.height + 1 && i % items.width === 0)
-      classList += ' puzzle__item--new-x';
+  // check extend
+  const isExtend = DOM.items.length !== puzzle.items.length;
 
-    DOM.puzzle.innerHTML += `<div class="${classList}" data-num=${i++}></div>`;
+  // update exsting items
+  for (let i = 0; i < DOM.items.length; i++) {
+    DOM.items[i].className = getItemClass(
+      i,
+      puzzle.width,
+      puzzle.height,
+      puzzle.items.length,
+      isExtend
+    );
+
+    DOM.items[i].style.color = getItemColor(puzzle.items[i].type);
   }
+
+  // add new items
+  for (let i = DOM.items.length; i < puzzle.items.length; i++) {
+    const className = getItemClass(
+      i,
+      puzzle.width,
+      puzzle.height,
+      puzzle.items.length,
+      isExtend
+    );
+
+    const style = `style="color: ${getItemColor(puzzle.items[i].type)}"`;
+
+    DOM.puzzle.innerHTML += `<div class="${className}" ${style} data-num=${i}></div>`;
+  }
+
+  DOM.items = document.querySelectorAll('.puzzle__item');
 };
 
 export const setItemsClick = func => {
-  DOM.items = document.querySelectorAll('.puzzle__item');
-
   for (const item of DOM.items) {
     item.addEventListener('click', func);
   }
-};
-
-export const reset = async (initialItems, clickHandler) => {
-  console.log(initialItems);
-  DOM.correct.innerHTML = 0;
-  DOM.wrong.innerHTML = 0;
-  DOM.total.innerHTML = 0;
-
-  await sleep(4200);
-  addItem({
-    items: [initialItems[0]],
-    width: 1,
-    height: 1
-  });
-
-  await sleep(config.puzzleNewItemTime * 2);
-  addItem({
-    items: [initialItems[0], initialItems[1]],
-    width: 2,
-    height: 1
-  });
-
-  await sleep(config.puzzleNewItemTime * 2);
-  addItem({
-    items: [initialItems[0], initialItems[1], initialItems[2], initialItems[3]],
-    width: 2,
-    height: 2
-  });
-
-  setItemsClick(clickHandler);
-
-  // wait untill adding animation finished
-  await sleep(config.puzzleItemRotateTime * 2);
-
-  // show solution
-  showSolution();
-
-  await sleep(config.showSolutionDuration);
-
-  hideSolution();
 };
 
 /**
@@ -93,6 +97,8 @@ export const reset = async (initialItems, clickHandler) => {
  */
 export const update = (target, result) => {
   // select item
+  if (!result.isCorrect) target.style.color = config.wrongColor;
+
   target.classList.add('puzzle__item--select');
 
   // update scoreboard
@@ -116,7 +122,7 @@ const showSolution = () => {
   for (const item of DOM.items) item.classList.add('puzzle__item--select');
 };
 
-export const goNext = async (newItems, clickHandler) => {
+const clearPuzzle = async () => {
   // wait to selected item rotate
   await sleep(config.puzzleItemRotateTime);
 
@@ -124,11 +130,9 @@ export const goNext = async (newItems, clickHandler) => {
 
   // wait until item rotation finished
   await sleep(config.puzzleItemRotateTime * 2);
+};
 
-  // add new item
-  addItem(newItems);
-  setItemsClick(clickHandler);
-
+const solution = async () => {
   // wait untill adding animation finished
   await sleep(config.puzzleItemRotateTime * 2);
 
@@ -138,4 +142,46 @@ export const goNext = async (newItems, clickHandler) => {
   await sleep(config.showSolutionDuration);
 
   hideSolution();
+};
+
+export const reset = async (initialItems, clickHandler) => {
+  DOM.correct.innerHTML = 0;
+  DOM.wrong.innerHTML = 0;
+  DOM.total.innerHTML = 0;
+
+  await sleep(4500);
+  addItem({
+    items: [initialItems[0]],
+    width: 1,
+    height: 1
+  });
+
+  await sleep(config.puzzleNewItemTime * 1.5);
+  addItem({
+    items: [initialItems[0], initialItems[1]],
+    width: 2,
+    height: 1
+  });
+
+  await sleep(config.puzzleNewItemTime * 1.8);
+  addItem({
+    items: [initialItems[0], initialItems[1], initialItems[2], initialItems[3]],
+    width: 2,
+    height: 2
+  });
+
+  setItemsClick(clickHandler);
+
+  await solution();
+};
+
+export const goNext = async (newItems, clickHandler) => {
+  await clearPuzzle();
+
+  // add new item
+  addItem(newItems);
+  setItemsClick(clickHandler);
+
+  // show solution
+  await solution();
 };

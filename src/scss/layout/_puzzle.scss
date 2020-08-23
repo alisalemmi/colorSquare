@@ -7,7 +7,9 @@
   &__item {
     position: relative;
     justify-self: left;
-    perspective: 150rem;
+    perspective: 50rem;
+
+    color: $frontColor;
 
     width: $puzzle-item-width;
     height: $puzzle-item-width;
@@ -49,11 +51,11 @@
 
     &::before {
       transform: rotateY(180deg);
-      background-color: $color-wrong;
+      background-color: currentColor;
     }
 
     &::after {
-      background-color: $color-total;
+      background-color: $frontColor;
     }
 
     &--select {
@@ -65,12 +67,6 @@
 
       &::after {
         transform: rotateY(-180deg);
-      }
-    }
-
-    &--sample {
-      &::before {
-        background-color: $color-correct;
       }
     }
   }
