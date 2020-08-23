@@ -1,12 +1,16 @@
 const state = {
   width: 2,
   height: 1,
+  items: [],
   score: {
     correct: 0,
     wrong: 0
   },
-  items: [],
   total: 0,
+  level: {
+    complete: 1,
+    total: 1
+  },
   finish: true
 };
 
@@ -15,25 +19,13 @@ export const setFinish = isFinish => {
   state.finish = isFinish;
 };
 
-export const reset = () => {
-  state.width = 2;
-  state.height = 2;
-  state.score.correct = 0;
-  state.score.wrong = 0;
-  state.total = 0;
-  state.items = selectItems().items;
-  state.finish = false;
-
-  return state.items;
-};
-
 /**
  * shuffle input array and return it
  * @param {number[]} array
  */
 const shuffle = array => {
   for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
@@ -45,7 +37,8 @@ export const selectItems = () => {
   // number of item to select
   const n = Math.ceil(
     Math.sqrt(state.width * state.height) *
-      Math.log10(state.width * state.height)
+      Math.log10(state.width * state.height) +
+      Math.sqrt(state.level.complete)
   );
 
   // update total
@@ -64,6 +57,20 @@ export const selectItems = () => {
   };
 };
 
+export const reset = () => {
+  state.width = 2;
+  state.height = 2;
+  state.score.correct = 0;
+  state.score.wrong = 0;
+  state.total = 0;
+  state.items = selectItems().items;
+  state.level.complete = 1;
+  state.level.total = 1;
+  state.finish = false;
+
+  return state.items;
+};
+
 /**
  * select item with this index.
  * @param {Number} index index of selected item
@@ -80,17 +87,22 @@ export const select = index => {
   if (isCorrect) state.score.correct++;
   else state.score.wrong++;
 
-  console.log(state.total);
   return {
     isCorrect,
     correct: state.score.correct,
     wrong: state.score.wrong,
-    levelComplete: state.score.correct == state.total,
+    levelComplete: state.score.correct === state.total,
     score: 0 // getScore(),
   };
 };
 
 export const goNext = () => {
-  if (state.width == state.height) state.width++;
-  else state.height++;
+  if (state.level.complete < state.level.total) state.level.complete++;
+  else {
+    if (state.width === state.height) state.width++;
+    else state.height++;
+
+    state.level.complete = 1;
+    state.level.total = state.width - 1;
+  }
 };
