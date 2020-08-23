@@ -27,7 +27,7 @@ export const start = total => {
 
     document.dispatchEvent(tick);
 
-    if (remain === 0) {
+    if (remain <= 0) {
       stop();
       document.dispatchEvent(new Event('timeUp'));
     }
@@ -35,3 +35,7 @@ export const start = total => {
 };
 
 export const getTime = () => remain;
+
+export const add = n => {
+  remain += n;
+};

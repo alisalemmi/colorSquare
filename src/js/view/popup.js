@@ -193,25 +193,27 @@ export const showScore = score => {
   DOM.checkScore.checked = true;
 };
 
-export const showRestart = calback => {
+export const showRestart = async () => {
   onClose(() => {
     DOM.restartTimer.classList.add('restart-timer--show');
     DOM.container.style.opacity = 0;
   });
 
-  let t = 4;
-  const inter = setInterval(() => {
-    if (t === 4) DOM.restartTimerLabel.innerHTML = '3';
-    else if (t > 1) DOM.restartTimerLabel.innerHTML = t - 1;
-    else if (t === 1) {
-      DOM.restartTimerLabel.innerHTML = '';
-      DOM.container.style.opacity = 1;
-    } else if (t === 0) {
-      DOM.restartTimer.classList.remove('restart-timer--show');
+  await new Promise(r => {
+    let t = 4;
+    const inter = setInterval(() => {
+      if (t === 4) DOM.restartTimerLabel.innerHTML = '3';
+      else if (t > 1) DOM.restartTimerLabel.innerHTML = t - 1;
+      else if (t === 1) {
+        DOM.restartTimerLabel.innerHTML = '';
+        DOM.container.style.opacity = 1;
+      } else if (t === 0) {
+        DOM.restartTimer.classList.remove('restart-timer--show');
 
-      calback();
-      clearInterval(inter);
-    }
-    t--;
-  }, 1000);
+        clearInterval(inter);
+        r();
+      }
+      t--;
+    }, 1000);
+  });
 };

@@ -46,7 +46,7 @@ export const addItem = puzzle => {
 
   // update probablity variable
   mean = Math.random() * config.puzzleColors.length;
-  variance *= 2;
+  variance *= 1.5;
 
   // check extend
   const isExtend = DOM.items.length !== puzzle.items.length;
@@ -149,7 +149,10 @@ export const reset = async (initialItems, clickHandler) => {
   DOM.wrong.innerHTML = 0;
   DOM.total.innerHTML = 0;
 
-  await sleep(4500);
+  DOM.puzzle.innerHTML = '';
+  DOM.items = [];
+
+  await sleep(config.puzzleNewItemTime);
   addItem({
     items: [initialItems[0]],
     width: 1,

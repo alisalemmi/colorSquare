@@ -1,6 +1,10 @@
 {
   "minRankScore": 1000,
+
   "time": 60,
+  "correctTimeAdd": 2,
+  "wrongTimeAdd": -5,
+
   "introDuration": 60,
   "introDelay": 10,
   "popupCloseDuration": 500,

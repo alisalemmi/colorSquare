@@ -23,6 +23,9 @@ const clickHandler = async e => {
   if (result) {
     UI.update(e.target, result);
 
+    if (result.isCorrect) Timer.add(config.correctTimeAdd);
+    else Timer.add(config.wrongTimeAdd);
+
     if (result.levelComplete) {
       await goNext();
     }
@@ -46,19 +49,20 @@ window.addEventListener('load', () => {
 
 Popup.playButtonHandler(async () => {
   // show 3 2 1
-  Popup.showRestart(() => Timer.start(config.time));
-
-  Item.setFinish(false);
+  await Popup.showRestart();
+  TimerUI.update(config.time, config.time);
 
   // reset
-  UI.reset(Item.reset(), clickHandler);
+  await UI.reset(Item.reset(), clickHandler);
 
-  // add items
-  // UI.addSamples(Item.selectSample());
-  // UI.addItem(Item.selectItems());
+  Item.setFinish(false);
+  Timer.start(config.time);
+});
 
-  // goNext();
+document.addEventListener('tick', e => {
+  TimerUI.update(e.detail.remain, config.time);
+});
 
-  // handle click
-  // UI.setItemsClick(clickHandler);
+document.addEventListener('timeUp', e => {
+  Popup.showScore({});
 });
