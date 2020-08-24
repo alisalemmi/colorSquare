@@ -36,6 +36,7 @@ const DOM = {
     wrong: document.querySelector('.result__wrong__number')
   },
   container: document.querySelector('.container'),
+  puzzle: document.querySelector('.puzzle'),
   restartTimer: document.querySelector('.restart-timer'),
   restartTimerLabel: document.querySelector('.restart-timer__number')
 };
@@ -202,8 +203,10 @@ export const showRestart = async () => {
   await new Promise(r => {
     let t = 4;
     const inter = setInterval(() => {
-      if (t === 4) DOM.restartTimerLabel.innerHTML = '3';
-      else if (t > 1) DOM.restartTimerLabel.innerHTML = t - 1;
+      if (t === 4) {
+        DOM.restartTimerLabel.innerHTML = '3';
+        DOM.puzzle.innerHTML = '';
+      } else if (t > 1) DOM.restartTimerLabel.innerHTML = t - 1;
       else if (t === 1) {
         DOM.restartTimerLabel.innerHTML = '';
         DOM.container.style.opacity = 1;
