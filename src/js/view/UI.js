@@ -196,6 +196,16 @@ export const goNext = async (newItems, level, clickHandler) => {
   DOM.section.innerHTML = level.section;
   DOM.level.innerHTML = `${level.level.complete} <small>از ${level.level.total}</small>`;
 
+  // update puzzle size
+  if (DOM.puzzle.offsetWidth > window.innerWidth * 0.75) {
+    DOM.puzzle.style.fontSize = `${
+      window
+        .getComputedStyle(DOM.puzzle, '80px')
+        .getPropertyValue('font-size')
+        .slice(0, -2) * 0.7
+    }px`;
+  }
+
   // add new item
   addItem(newItems);
   setItemsClick(clickHandler);

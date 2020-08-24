@@ -32,7 +32,7 @@ const clickHandler = async e => {
       if (result.sectionComplete) addTime += config.sectionCompleteTimeAdd * n;
 
       Timer.add(addTime);
-      e.target.innerHTML = `<div style="color: white;font-size: 2.5rem;transform: rotateY(-180deg);">+ ${addTime}s</div>`;
+      e.target.innerHTML = `<div class="puzzle__item__add-time">+ ${addTime}s</div>`;
 
       await goNext();
     }
