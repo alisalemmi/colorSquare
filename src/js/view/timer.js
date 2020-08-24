@@ -1,9 +1,9 @@
 import * as circle from './circle';
 
 const DOM = {
-  ring: document.querySelector('.scoreboard .timer__path-remaining'),
-  label: document.querySelector('.scoreboard .timer__label'),
-  svg: document.querySelector('.scoreboard .timer__svg')
+  ring: document.querySelector('.level .timer__path-remaining'),
+  label: document.querySelector('.level .timer__label'),
+  svg: document.querySelector('.level .timer__svg')
 };
 
 const formatTime = time => {

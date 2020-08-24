@@ -41,8 +41,8 @@ const clickHandler = async e => {
 
 const goNext = async () => {
   Item.setFinish(true);
-  Item.goNext();
-  await UI.goNext(Item.selectItems(), clickHandler);
+  const level = Item.goNext();
+  await UI.goNext(Item.selectItems(), level, clickHandler);
 
   UI.setItemsClick(clickHandler);
   Item.setFinish(false);
@@ -70,7 +70,7 @@ document.addEventListener('tick', e => {
   TimerUI.update(e.detail.remain, config.time);
 });
 
-document.addEventListener('timeUp', e => {
+document.addEventListener('timeUp', () => {
   Item.setFinish(true);
   Popup.showScore(Item.calcScore());
 });

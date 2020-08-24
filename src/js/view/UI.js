@@ -6,6 +6,8 @@ const DOM = {
   correct: document.querySelector('.scoreboard__correct__number'),
   wrong: document.querySelector('.scoreboard__wrong__number'),
   total: document.querySelector('.scoreboard__total__number'),
+  section: document.querySelector('.level__section__number'),
+  level: document.querySelector('.level__level__number'),
   items: [],
   mute: document.querySelector('.mute')
 };
@@ -158,6 +160,9 @@ export const reset = async (initialItems, clickHandler) => {
   DOM.puzzle.innerHTML = '';
   DOM.items = [];
 
+  DOM.section.innerHTML = '1';
+  DOM.level.innerHTML = `1 <small>از 1</small>`;
+
   await sleep(config.puzzleNewItemTime);
   addItem({
     items: [initialItems[0]],
@@ -184,8 +189,12 @@ export const reset = async (initialItems, clickHandler) => {
   await solution();
 };
 
-export const goNext = async (newItems, clickHandler) => {
+export const goNext = async (newItems, level, clickHandler) => {
   await clearPuzzle();
+
+  // update level
+  DOM.section.innerHTML = level.section;
+  DOM.level.innerHTML = `${level.level.complete} <small>از ${level.level.total}</small>`;
 
   // add new item
   addItem(newItems);

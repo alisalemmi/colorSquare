@@ -1,0 +1,24 @@
+.level {
+  @include card(left);
+
+  .timer,
+  .result-card {
+    margin: $font-score / 3 0;
+
+    @include respond(phone) {
+      margin: 0 $font-score / 4;
+    }
+  }
+
+  &__section__number {
+    font-weight: 700;
+  }
+
+  &__level {
+    direction: rtl;
+
+    small {
+      font-size: 60%;
+    }
+  }
+}

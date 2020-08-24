@@ -1,6 +1,6 @@
 const state = {
   width: 2,
-  height: 1,
+  height: 2,
   items: [],
   score: {
     correct: 0,
@@ -11,6 +11,7 @@ const state = {
     complete: 1,
     total: 1
   },
+  section: 1,
   finish: true
 };
 
@@ -72,6 +73,7 @@ export const reset = () => {
   state.items = selectItems().items;
   state.level.complete = 1;
   state.level.total = 1;
+  state.section = 1;
   state.finish = false;
 
   return state.items;
@@ -122,7 +124,16 @@ export const goNext = () => {
     if (state.width === state.height) state.width++;
     else state.height++;
 
+    state.section++;
     state.level.complete = 1;
-    state.level.total = state.width - 1;
+    state.level.total = state.width;
   }
+
+  return {
+    section: state.section,
+    level: {
+      complete: state.level.complete,
+      total: state.level.total
+    }
+  };
 };

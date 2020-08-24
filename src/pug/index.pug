@@ -4,25 +4,31 @@ include module/timer
 block container
   .container
     .scoreboard
-      +timer
-
-      .scoreboard__correct
+      .scoreboard__correct.result-card
         span.scoreboard__correct__number 0
         h3 درست
 
-      .scoreboard__wrong
+      .scoreboard__wrong.result-card
         span.scoreboard__wrong__number 0
         h3 نادرست
 
-      .scoreboard__total
+      .scoreboard__total.result-card
         span.scoreboard__total__number 0
         h3 امتیاز
 
     .puzzle
       //- .puzzle__item.puzzle__item--sample.puzzle__item--select.puzzle__item--new-x.puzzle__item--new-y
 
-    .sample
-      //- div: img.sample__item(src = '../img/1.png', alt = 'Sample${i}')
+    .level
+      +timer
+
+      .level__section.result-card
+        span.level__section__number 1
+        h3 مرحله
+
+      .level__level.result-card
+        span.level__level__number 1
+          small از 1
 
     .home
       svg.icon
