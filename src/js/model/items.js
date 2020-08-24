@@ -31,17 +31,21 @@ const shuffle = array => {
   return array;
 };
 
-export const selectItems = () => {
-  state.items = [];
-
-  // number of item to select
-  const n = Math.ceil(
+export const getCorrectInThisLevel = () => {
+  return Math.ceil(
     ((Math.sqrt(state.width * state.height) *
       Math.log10(state.width * state.height) +
       Math.sqrt(state.level.complete)) *
       2) /
       3
   );
+};
+
+export const selectItems = () => {
+  state.items = [];
+
+  // number of item to select
+  const n = getCorrectInThisLevel();
 
   // update total
   state.total += n;
@@ -73,7 +77,8 @@ export const reset = () => {
   return state.items;
 };
 
-const getScore = () => state.score.correct * 12;
+const getScore = () =>
+  Math.floor((state.score.correct - state.score.wrong / 3) * 8);
 
 export const calcScore = () => {
   return {
@@ -104,6 +109,9 @@ export const select = index => {
     correct: state.score.correct,
     wrong: state.score.wrong,
     levelComplete: state.score.correct === state.total,
+    sectionComplete:
+      state.score.correct === state.total &&
+      state.level.complete === state.level.total,
     score: getScore()
   };
 };

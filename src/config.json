@@ -1,13 +1,15 @@
 {
   "minRankScore": 1000,
 
-  "time": 60,
-  "correctTimeAdd": 2,
+  "time": 80,
+  "correctTimeAdd": 1,
   "wrongTimeAdd": -5,
+  "sectionCompleteTimeAdd": 2,
 
   "introDuration": 60,
   "introDelay": 10,
   "popupCloseDuration": 500,
+  "clearPuzzleDelay": 500,
   "showSolutionDuration": 1500,
   "puzzleItemRotateTime": 500,
   "puzzleNewItemTime": 300,

@@ -7,8 +7,6 @@ const DOM = {
 };
 
 const formatTime = time => {
-  if (time < 0) time = 0;
-
   const minutes = Math.floor(time / 60);
   const seconds = `${time % 60}`.padStart(2, '0');
 
@@ -16,6 +14,8 @@ const formatTime = time => {
 };
 
 export const update = (remain, total) => {
+  if (remain < 0) remain = 0;
+
   DOM.label.innerHTML = formatTime(remain);
   circle.setCircleDashArray(DOM, remain, total, true);
   circle.setRemainingPathColor(DOM, remain / total);

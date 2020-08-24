@@ -6,7 +6,7 @@ export const stop = () => {
 };
 
 export const start = total => {
-  remain = total;
+  remain = (total * 3) / 4;
 
   const tick = new CustomEvent('tick', {
     detail: {

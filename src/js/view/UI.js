@@ -116,7 +116,10 @@ export const update = (target, result) => {
 };
 
 const hideSolution = () => {
-  for (const item of DOM.items) item.classList.remove('puzzle__item--select');
+  for (const item of DOM.items) {
+    item.classList.remove('puzzle__item--select');
+    item.innerHTML = '';
+  }
 };
 
 const showSolution = () => {
@@ -125,7 +128,7 @@ const showSolution = () => {
 
 const clearPuzzle = async () => {
   // wait to selected item rotate
-  await sleep(config.puzzleItemRotateTime);
+  await sleep(config.puzzleItemRotateTime + config.clearPuzzleDelay);
 
   hideSolution();
 
@@ -140,7 +143,9 @@ const solution = async () => {
   // show solution
   showSolution();
 
-  await sleep(config.showSolutionDuration);
+  await sleep(
+    (config.showSolutionDuration * Math.log10(DOM.items.length)) / Math.log10(8)
+  );
 
   hideSolution();
 };

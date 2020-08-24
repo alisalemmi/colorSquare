@@ -5,6 +5,11 @@
   @include card(center);
 
   &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: ltr;
+
     position: relative;
     justify-self: left;
     perspective: 50rem;

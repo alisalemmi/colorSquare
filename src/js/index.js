@@ -23,10 +23,17 @@ const clickHandler = async e => {
   if (result) {
     UI.update(e.target, result);
 
-    if (result.isCorrect) Timer.add(config.correctTimeAdd);
-    else Timer.add(config.wrongTimeAdd);
+    if (!result.isCorrect) Timer.add(config.wrongTimeAdd);
 
     if (result.levelComplete) {
+      const n = Item.getCorrectInThisLevel();
+
+      let addTime = config.correctTimeAdd * n;
+      if (result.sectionComplete) addTime += config.sectionCompleteTimeAdd * n;
+
+      Timer.add(addTime);
+      e.target.innerHTML = `<div style="color: white;font-size: 2.5rem;transform: rotateY(-180deg);">+ ${addTime}s</div>`;
+
       await goNext();
     }
   }
@@ -50,7 +57,7 @@ window.addEventListener('load', () => {
 Popup.playButtonHandler(async () => {
   // show 3 2 1
   await Popup.showRestart();
-  TimerUI.update(config.time, config.time);
+  TimerUI.update((config.time * 3) / 4, config.time);
 
   // reset
   await UI.reset(Item.reset(), clickHandler);
@@ -64,6 +71,7 @@ document.addEventListener('tick', e => {
 });
 
 document.addEventListener('timeUp', e => {
+  Item.setFinish(true);
   Popup.showScore(Item.calcScore());
 });
 
