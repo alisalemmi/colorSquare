@@ -116,7 +116,7 @@ export const playButtonHandler = func => {
 };
 
 export const homeHandler = isFinish => {
-  document.querySelector('.help').addEventListener('click', () => {
+  document.querySelector('.home').addEventListener('click', () => {
     DOM.checkMenu.checked = !isFinish();
     DOM.checkScore.checked = isFinish();
   });

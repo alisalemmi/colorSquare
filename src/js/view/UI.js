@@ -6,7 +6,8 @@ const DOM = {
   correct: document.querySelector('.scoreboard__correct__number'),
   wrong: document.querySelector('.scoreboard__wrong__number'),
   total: document.querySelector('.scoreboard__total__number'),
-  items: []
+  items: [],
+  mute: document.querySelector('.mute')
 };
 
 let mute = false;
@@ -188,3 +189,15 @@ export const goNext = async (newItems, clickHandler) => {
   // show solution
   await solution();
 };
+
+DOM.mute.addEventListener('click', () => {
+  if (mute) {
+    DOM.mute.innerHTML =
+      '<svg class="icon"><use xlink:href="./img/sprite.svg#speaker"/></svg>';
+    mute = false;
+  } else {
+    DOM.mute.innerHTML =
+      '<svg class="icon"><use xlink:href="./img/sprite.svg#speaker-1"/></svg>';
+    mute = true;
+  }
+});

@@ -7,6 +7,8 @@ const DOM = {
 };
 
 const formatTime = time => {
+  if (time < 0) time = 0;
+
   const minutes = Math.floor(time / 60);
   const seconds = `${time % 60}`.padStart(2, '0');
 

@@ -36,9 +36,11 @@ export const selectItems = () => {
 
   // number of item to select
   const n = Math.ceil(
-    Math.sqrt(state.width * state.height) *
+    ((Math.sqrt(state.width * state.height) *
       Math.log10(state.width * state.height) +
-      Math.sqrt(state.level.complete)
+      Math.sqrt(state.level.complete)) *
+      2) /
+      3
   );
 
   // update total
@@ -71,6 +73,16 @@ export const reset = () => {
   return state.items;
 };
 
+const getScore = () => state.score.correct * 12;
+
+export const calcScore = () => {
+  return {
+    correct: state.score.correct,
+    wrong: state.score.wrong,
+    score: getScore()
+  };
+};
+
 /**
  * select item with this index.
  * @param {Number} index index of selected item
@@ -92,7 +104,7 @@ export const select = index => {
     correct: state.score.correct,
     wrong: state.score.wrong,
     levelComplete: state.score.correct === state.total,
-    score: 0 // getScore(),
+    score: getScore()
   };
 };
 

@@ -64,5 +64,7 @@ document.addEventListener('tick', e => {
 });
 
 document.addEventListener('timeUp', e => {
-  Popup.showScore({});
+  Popup.showScore(Item.calcScore());
 });
+
+Popup.homeHandler(Item.getFinish);
