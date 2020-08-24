@@ -26,31 +26,6 @@
     font-size: 115%;
   }
 
-  &__correct,
-  &__wrong {
-    text-align: center;
-
-    @include respond(phone) {
-      width: 7rem;
-    }
-
-    &__number {
-      display: block;
-      margin-bottom: -$font-score / 4;
-
-      @include respond(phone) {
-        margin: 0;
-      }
-
-      font-size: $font-score;
-    }
-
-    h3 {
-      margin: 0;
-      font-size: $font-score / 2;
-    }
-  }
-
   &__correct {
     grid-column: 2 / 4;
 

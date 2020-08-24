@@ -37,3 +37,28 @@
     width: auto;
   }
 }
+
+.result-card {
+  text-align: center;
+  direction: ltr;
+
+  @include respond(phone) {
+    width: 7rem;
+  }
+
+  span {
+    display: block;
+    margin-bottom: -$font-score / 4;
+
+    @include respond(phone) {
+      margin: 0;
+    }
+
+    font-size: $font-score;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: $font-score / 2;
+  }
+}

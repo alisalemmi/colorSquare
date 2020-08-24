@@ -4,43 +4,10 @@
   &__correct,
   &__wrong,
   &__total {
-    text-align: center;
-
-    @include respond(phone) {
-      width: 7rem;
-    }
-
-    &__number {
-      display: block;
-      margin-bottom: -$font-score / 4;
-
-      @include respond(phone) {
-        margin: 0;
-      }
-
-      font-size: $font-score;
-    }
-
-    h3 {
-      margin: 0;
-      font-size: $font-score / 2;
-    }
-  }
-
-  &__correct {
     margin: $font-score / 3 0;
 
     @include respond(phone) {
-      margin: 0 $font-score / 2;
-    }
-  }
-
-  &__total {
-    margin-top: $font-score / 3;
-
-    @include respond(phone) {
-      margin-top: 0;
-      margin-right: $font-score / 2;
+      margin: 0 $font-score / 4;
     }
   }
 
@@ -53,7 +20,6 @@
   }
 
   &__total__number {
-    direction: ltr;
     color: $color-total;
   }
 }
