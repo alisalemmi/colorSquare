@@ -7,6 +7,7 @@ import * as config from '../config.json';
 
 import * as UI from './view/UI';
 import * as Item from './model/items';
+import * as connect from './model/connect';
 import * as TimerUI from './view/timer';
 import * as Timer from './model/timer';
 import * as Popup from './view/popup';
@@ -70,9 +71,12 @@ document.addEventListener('tick', e => {
   TimerUI.update(e.detail.remain, config.time);
 });
 
-document.addEventListener('timeUp', () => {
+document.addEventListener('timeUp', async () => {
   Item.setFinish(true);
-  Popup.showScore(Item.calcScore());
+
+  const score = Item.calcScore();
+  await connect.sendResult(score);
+  Popup.showScore(score);
 });
 
 Popup.homeHandler(Item.getFinish);

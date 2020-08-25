@@ -3,6 +3,7 @@
   gap: 1rem;
 
   font-size: $puzzle-item-width;
+  transition: all ease 0.3s;
 
   @include respond(tab-port) {
     font-size: $puzzle-item-width * 0.8;

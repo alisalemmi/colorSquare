@@ -6,8 +6,8 @@
   "wrongTimeAdd": -5,
   "sectionCompleteTimeAdd": 2,
 
-  "introDuration": 60,
-  "introDelay": 10,
+  "introDuration": 6000,
+  "introDelay": 1000,
   "popupCloseDuration": 500,
   "clearPuzzleDelay": 500,
   "showSolutionDuration": 1500,
