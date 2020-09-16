@@ -2,15 +2,10 @@
   display: grid;
   gap: 1rem;
 
-  font-size: $puzzle-item-width;
+  --item-size: 6rem;
+
   transition: all ease 0.3s;
 
-  @include respond(tab-port) {
-    font-size: $puzzle-item-width * 0.8;
-  }
-  @media only screen and (max-height: 22.2em) {
-    font-size: $puzzle-item-width * 0.7;
-  }
 
   @include card(center);
 
@@ -26,8 +21,10 @@
 
     color: $frontColor;
 
-    width: 1em;
-    height: 1em;
+    width: var(--item-size);
+    height: var(--item-size);
+
+    transition: width ease 0.3s, height ease 0.3s;
 
     &--new-x {
       animation: anim-new-x #{$puzzleNewItemTime}ms ease-in-out;
@@ -78,7 +75,7 @@
 
     &__add-time {
       color: white;
-      font-size: 0.3em;
+      font-size: calc(var(--item-size / 3.5));
       transform: rotateY(-180deg);
     }
   }

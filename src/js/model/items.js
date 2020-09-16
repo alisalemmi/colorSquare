@@ -126,7 +126,7 @@ export const goNext = () => {
 
     state.section++;
     state.level.complete = 1;
-    state.level.total = state.width;
+    state.level.total = 1;//state.width;
   }
 
   return {
